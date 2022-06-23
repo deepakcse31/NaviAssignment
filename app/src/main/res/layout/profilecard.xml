@@ -10,7 +10,7 @@
     android:id="@+id/cardview"
     android:backgroundTint="@color/white"
     android:background="@color/white"
-    android:layout_marginTop="10dp"
+    android:layout_marginVertical="15dp"
     >
 
         <androidx.constraintlayout.widget.ConstraintLayout
