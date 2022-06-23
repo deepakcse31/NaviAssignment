@@ -37,7 +37,7 @@ class Profilescreenadapter(private val context: Context,val list : List<Resource
             if (result.data?.get(position)?.closed_at?.toString().equals(null))
             {
 
-                tvcloseddate.text= "Closed Date Not Fount"
+                tvcloseddate.text= "Closed Date Not Found"
                 tvcloseddate.setTextColor(Color.parseColor("#A30000"));
             }else{
 
