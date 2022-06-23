@@ -1,6 +1,6 @@
 package com.example.githubscreen.viewmodel
 
-import android.content.res.Resources
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,33 +23,33 @@ class ProfileViewmodel @Inject constructor(
 
     fun githubprofiledetails()
     {
+        Log.e("profiledetails","profiledetails"+"profiledetails")
         viewModelScope.launch {
             try {
-                coroutineScope {
-                    githubdata.postValue(Resource.loading(null))
-                    if (networkHelper.isNetworkConnected())
-                    {
-                        mainRepository.getUsers().let {
-                            if (it.isSuccessful)
-                            {
-                                githubdata.postValue(Resource.success(it.body()))
-                            }
-                            else{
-                                githubdata.postValue(
-                                    Resource.error(
-                                        it.errorBody().toString(),
-                                        null
-                                    )
+                githubdata.postValue(Resource.loading(null))
+                if (networkHelper.isNetworkConnected())
+                {
+                    mainRepository.getUsers().let {
+                        if (it.isSuccessful)
+                        {
+                            Log.e("Succesful","Succesful"+"Sucessful")
+                            githubdata.value = Resource.success(it.body())
+                        }
+                        else{
+                            Log.e("UnSuccesful","UnSuccesful"+"UnSucessful")
+                            githubdata.postValue(Resource.error(
+                                    it.errorBody().toString(),
+                                    null
                                 )
-                            }
+                            )
                         }
                     }
-                    else{
-                        githubdata.postValue(Resource.error("No Internet Connection",null))
-                    }
+                }
+                else{
+                    githubdata.postValue(Resource.error("No Internet Connection",null))
                 }
             }catch (e: Exception) {
-
+                Log.d("LogTag", e.toString())
             }
         }
     }

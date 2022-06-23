@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/backgroundfile.xml" value="0.112" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14010416666666667" />
         <entry key="app/src/main/res/layout/fragment_profile_screen.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/profilecard.xml" value="0.29375" />
       </map>
     </option>
   </component>

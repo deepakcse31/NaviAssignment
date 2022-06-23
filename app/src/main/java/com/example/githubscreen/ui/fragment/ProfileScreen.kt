@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubscreen.R
 import com.example.githubscreen.databinding.FragmentProfileScreenBinding
 import com.example.githubscreen.network.NetworkConnectionLiveData
+import com.example.githubscreen.ui.adapter.Profilescreenadapter
 import com.example.githubscreen.utils.Status
 import com.example.githubscreen.viewmodel.ProfileViewmodel
 import com.squareup.picasso.Picasso
@@ -25,6 +27,8 @@ class ProfileScreen : Fragment() {
     lateinit var networkConnectionLiveData : NetworkConnectionLiveData
     private var binding : FragmentProfileScreenBinding?=null
     private val profileViewmodel : ProfileViewmodel by viewModels()
+    private var profilescreenadapter : Profilescreenadapter?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -43,18 +47,16 @@ class ProfileScreen : Fragment() {
             }
         }
         profileViewmodel._githubdata.observe(viewLifecycleOwner){
-            Log.e("Data","Data"+it)
             when(it.status)
             {
                 Status.SUCCESS->{
                     binding?.topProgress?.visibility = View.INVISIBLE
-                    binding!!.tvname.setText(it.data?.name)
-                    binding!!.tvemail.setText(it.data?.bio.toString())
-                    Picasso.get()
-                        .load(it?.data?.avatar_url)
-                        .into(binding!!.ivprofile)
-                    binding!!.createddate.setText("Created Date : "+it.data?.created_at)
-                    Log.e("Data","Data"+it.data?.name)
+                    binding?.apply {
+                        profilerecyclerview.setLayoutManager(LinearLayoutManager(context));
+                        profilerecyclerview.setHasFixedSize(true)
+                        profilescreenadapter= Profilescreenadapter(requireContext(), listOf(it))
+                        profilerecyclerview.adapter=profilescreenadapter
+                    }
                 }
                 Status.ERROR -> {
                     binding?.topProgress?.visibility = View.VISIBLE
